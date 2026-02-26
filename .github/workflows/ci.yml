@@ -1,0 +1,49 @@
+name: CI - Validação do Portfólio
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  quality-check:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18, 20]
+
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+      - name: Instalar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Verificar index.html
+        run: |
+          if [ ! -f index.html ]; then
+            echo "index.html não encontrado!"
+            exit 1
+          fi
+
+      - name: Instalar Linter
+        run: npm install -g htmlhint
+
+      - name: Rodar Linter HTML
+        run: htmlhint "*.html"
+
+      - name: Verificar tamanho dos arquivos
+        run: |
+          if find . -type f -size +500k | grep .; then
+            echo "Arquivo maior que 500KB encontrado!"
+            exit 1
+          fi
+
+      - name: Verificar termos proibidos
+        run: |
+          if grep -rE "TODO|FIXME|senha|password" . ; then
+            echo "Termos proibidos encontrados!"
+            exit 1
+          fi

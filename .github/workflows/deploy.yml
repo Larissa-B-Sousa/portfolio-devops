@@ -1,0 +1,29 @@
+name: CD - Deploy GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+      - name: Configurar Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload do site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./
+
+      - name: Publicar no GitHub Pages
+        uses: actions/deploy-pages@v4

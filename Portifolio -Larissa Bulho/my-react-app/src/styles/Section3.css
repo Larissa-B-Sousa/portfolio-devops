@@ -1,0 +1,25 @@
+#section3 {
+    background-color: #0d0e11;
+    padding: 50px 20px;
+    text-align: center;
+  }
+  
+  .service-box {
+    background-color: #292c34;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    margin: 10px;
+  }
+  
+  .service-icon img {
+    width: 50px;
+  }
+  
+  .service-box h6 {
+    color: #ff4500;
+  }
+
+h4, h5 {
+  color: white;
+}
